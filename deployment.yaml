@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: getting-started
+  labels:
+    app: getting-started
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: getting-started
+  template:
+    metadata:
+      name: getting-started
+      labels:
+        app: getting-started
+    spec:
+      containers:
+        - name: getting-started
+          image: akshatgautam/getting-started:latest
+          volumeDevices:
+            - name: block-volume
+              mountPath: /etc/todos/
+      restartPolicy: Always
+      volumes:
+        - name: block-volume
+          persistentVolumeClaim:
+            claimName: block-claim
